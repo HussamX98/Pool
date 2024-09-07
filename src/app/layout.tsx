@@ -1,6 +1,7 @@
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NavigationBar } from "./components/navigationBar";
@@ -21,8 +22,10 @@ export default function RootLayout({
 {
 
   return (
+    
     <html lang="en">
       <body className={inter.className} style={{backgroundColor:"rgb(0 0 0)"}}>
+        <NextUIProvider>
          <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -34,6 +37,7 @@ export default function RootLayout({
             </BackgroundBeamsWithCollision>
             <NavigationBar/>
           </ThemeProvider>
+          </NextUIProvider>
       </body>
     </html>
   );

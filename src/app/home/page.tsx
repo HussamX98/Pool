@@ -34,10 +34,10 @@ export default function Home() {
 
   return (
     <div style={{display:"flex", overflow:"auto", flex:"1", flexDirection:"column", height:"100vh"}}>
-    <PageTitle/>
+    <PageTitle title="Pools"/>
     <div className="grid grid-cols-2">
     {cards.map((card, index) =>(
-      <PoolCard title={card.title} src={card.src} balance={card.balance} id={card.id} key={card.id}/>
+      <PoolCard title={card.title} src={card.src} balance={card.balance} id={card.id} key={index}/>
     ))}
     <PoolCard title={""} src={""} balance={""} id={""} key={"none"}/>
     </div>
