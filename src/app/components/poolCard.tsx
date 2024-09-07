@@ -2,7 +2,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import Image from "next/image";
 import Link from "next/link";
-import { people } from "../cardInfo";
+import { people } from "../data/cardInfo";
 import AddPoolModal from "./addPoolModal";
 
 type propsType={

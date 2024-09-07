@@ -1,90 +1,160 @@
-'use client';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-console */
 
-import { cn } from "@/lib/utils";
-import {
-  IconBrandGoogle
-} from "@tabler/icons-react";
-import { useRouter } from 'next/navigation';
-import React from "react";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+"use client";
 
-export default function Login() {
+import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
+import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import { Web3Auth } from "@web3auth/modal";
+import { useEffect, useState } from "react";
+
+import { useRouter } from "next/navigation";
+import RPC from "../lib/ethersRPC";
+// import RPC from "./viemRPC";
+// import RPC from "./web3RPC";
+
+const clientId = "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ"; // get from https://dashboard.web3auth.io
+
+const chainConfig = {
+  chainNamespace: CHAIN_NAMESPACES.EIP155,
+  chainId: "0xaa36a7",
+  rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+  // Avoid using public rpcTarget in production.
+  // Use services like Infura, Quicknode etc
+  displayName: "Ethereum Sepolia Testnet",
+  blockExplorerUrl: "https://sepolia.etherscan.io",
+  ticker: "ETH",
+  tickerName: "Ethereum",
+  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+};
+
+const privateKeyProvider = new EthereumPrivateKeyProvider({
+  config: { chainConfig },
+});
+
+const web3auth = new Web3Auth({
+  clientId,
+  web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+  privateKeyProvider,
+});
+
+function Login() {
+  const [provider, setProvider] = useState<IProvider | null>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const router = useRouter()
 
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await web3auth.initModal();
+        setProvider(web3auth.provider);
+
+        if (web3auth.connected) {
+          setLoggedIn(true);
+          router.push("/home")
+        }
+      } catch (error) {
+        router.push("/")
+        console.error(error);
+      }
+    };
+
+    init();
+  }, []);
+
+  const login = async () => {
+    const web3authProvider = await web3auth.connect();
+    setProvider(web3authProvider);
+    if (web3auth.connected) {
+      setLoggedIn(true);
+      router.push("/home")
+    }
+  };
+
+  const getUserInfo = async () => {
+    const user = await web3auth.getUserInfo();
+    uiConsole(user);
+  };
+
+  const logout = async () => {
+    await web3auth.logout();
+    setProvider(null);
+    setLoggedIn(false);
+    router.push("/")
+    uiConsole("logged out");
+  };
+
+  // Check the RPC file for the implementation
+  const getAccounts = async () => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    const address = await RPC.getAccounts(provider);
+    uiConsole(address);
+  };
+
+  const getBalance = async () => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    const balance = await RPC.getBalance(provider);
+    uiConsole(balance);
+  };
+
+  const signMessage = async () => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    const signedMessage = await RPC.signMessage(provider);
+    uiConsole(signedMessage);
+  };
+
+  const sendTransaction = async () => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+    uiConsole("Sending Transaction...");
+    const transactionReceipt = await RPC.sendTransaction(provider);
+    uiConsole(transactionReceipt);
+  };
+
+  function uiConsole(...args: any[]): void {
+    const el = document.querySelector("#console>p");
+    if (el) {
+      el.innerHTML = JSON.stringify(args || {}, null, 2);
+      console.log(...args);
+    }
+  }
+
+  const loggedInView = (
+    <>
+    
+    </>
+  );
+
+  const unloggedInView = (
+    <button className="p-[3px] relative" onClick={login}>
+  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-green-500 rounded-lg" />
+  <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+    Poolin
+  </div>
+</button>
+    
+  );
+
   return (
-    <div className="shadow-input max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 bg-white dark:bg-black">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome, Start Pooling
-      </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login or create an account to Pool!
-      </p>
- 
-      <div className="my-8">
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address or Username</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
-        </LabelInputContainer>
- 
-        <button
-          className="mb-4 bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          onClick={() => router.push('/home')}
-        >
-          Login
-          <BottomGradient />
-        </button>
-        
-        <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          onClick={() => router.push("/register")}
-        >
-          Sign up
-          <BottomGradient />
-        </button>
- 
-        <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
- 
-        <div className="flex flex-col space-y-4">
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-          >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              Login With Google
-            </span>
-            <BottomGradient />
-          </button>
-        </div>
-      </div>
+    <div >
+      <div>{loggedIn ? loggedInView : unloggedInView}</div>
     </div>
   );
 }
 
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-    </>
-  );
-};
- 
-const LabelInputContainer = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
-      {children}
-    </div>
-  );
-};
+export default Login;
+
 

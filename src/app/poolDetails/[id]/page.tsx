@@ -1,10 +1,12 @@
 "use client";
 
-import { cards, ICard, people } from "@/app/cardInfo";
+import AddMemeberModal from "@/app/components/addMemeberModal";
+import { NavigationBar } from "@/app/components/navigationBar";
 import { PageTitle } from "@/app/components/pageTitle";
+import { PoolCardDetails } from "@/app/components/poolCardDetails";
+import { cards, ICard, people, poolDetials } from "@/app/data/cardInfo";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
-import { Card, CardFooter, Image } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 
@@ -36,8 +38,14 @@ export default function PoolDetails({ params }: { params: { id: string } }){
                 ${pool?.balance}
                 </Highlight>
                 </p>
-                <div className="flex flex-row items-center justify-center pb-10 w-full">
+                <div className="flex flex-row items-center justify-center pb-10 w-full" style={{gap:"30px"}} >
+                      <div className="flex">
                         <AnimatedTooltip items={people} />
+                      </div>
+                        <div className="flex">
+                        <AddMemeberModal/>
+                        </div>
+                        
                 </div>
                 <div >
                     <HeroHighlight >
@@ -54,240 +62,26 @@ export default function PoolDetails({ params }: { params: { id: string } }){
                             duration: 0.5,
                             ease: [0.4, 0.0, 0.2, 1],
                             }}
-                            className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold  dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-start mx-auto bg-transparent flex"
-                            style={{width:"100vw"}}
+                            className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold  dark:text-white  leading-relaxed lg:leading-snug text-start mx-auto bg-transparent grid grid-cols-1"
+                            style={{overflow:"scroll", width:"100vw", height:"100%"}}
                         >
-                            <div style={{overflow:"scroll"}} >
-                                <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
+                            {poolDetials.map((detail, index)=>{
+                                var side:string = "start"
+                                if(detail.member === "Hussam Alsiliti")
+                                {
+                                    side = "end"
+                                }
+                                return(
+                                    <div style={{justifySelf:side}} className="mb-5">
+                                        <PoolCardDetails member={detail.member} date={detail.date} src={detail.src} id={detail.id} from={detail.from} price={detail.price}/>
                                     </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
-                                    </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
-                                    </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
-                                    </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
-                                    </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
-                                    </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            <Card
-                                isFooterBlurred
-                                radius="lg"
-                                className="border-none"
-                                style={{}}
-                                >
-                                <Image
-                                    alt="Woman listing to music"
-                                    className="object-cover"
-                                    height={200}
-                                    src="https://nextui.org/images/hero-card.jpeg"
-                                    width={200}
-                                />
-                                <CardFooter className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-                                    <p className="text-tiny text-white/80" style={{flex:"auto"}}>
-                                    <div className="flex" style={{flexDirection:"column"}}>
-                                        <p>
-                                            Member:
-                                        </p>
-                                        <p>
-                                            Date:
-                                        </p>
-                                        <p>
-                                            From:
-                                        </p>
-                                        <p>
-                                            Price:
-                                        </p>
-                                    </div>
-                                    </p>
-                                </CardFooter>
-                            </Card>
-                            </div>
+                                )
+                            })}
                         </motion.h1>
-                        
                     </HeroHighlight>
                 </div>
             </div>
+            <NavigationBar/>
         </div>
     );
 }

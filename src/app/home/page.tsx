@@ -1,9 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useId, useRef, useState } from "react";
-import { cards } from "../cardInfo";
+import { NavigationBar } from "../components/navigationBar";
 import { PageTitle } from "../components/pageTitle";
 import { PoolCard } from "../components/poolCard";
+import { cards } from "../data/cardInfo";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 export default function Home() {
@@ -41,6 +42,7 @@ export default function Home() {
     ))}
     <PoolCard title={""} src={""} balance={""} id={""} key={"none"}/>
     </div>
+    <NavigationBar/>
     </div>
   );
 }

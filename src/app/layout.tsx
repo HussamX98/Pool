@@ -4,7 +4,6 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-w
 import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { NavigationBar } from "./components/navigationBar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -35,7 +34,7 @@ export default function RootLayout({
             <BackgroundBeamsWithCollision className="min-h-screen">
                 {children}
             </BackgroundBeamsWithCollision>
-            <NavigationBar/>
+            
           </ThemeProvider>
           </NextUIProvider>
       </body>

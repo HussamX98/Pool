@@ -10,6 +10,28 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 't3.ftcdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.incharge.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wallpapers.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'png.pngtree.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      
+      
     ],
   },
 };
