@@ -22,7 +22,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className} style={{backgroundColor:"rgb(0, 0, 0)"}}>
+      <body className={inter.className} style={{backgroundColor:"rgb(0 0 0)"}}>
          <ThemeProvider
             attribute="class"
             defaultTheme="dark"
