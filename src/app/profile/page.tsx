@@ -3,11 +3,11 @@
 import { BellRing } from "lucide-react";
 
 import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +16,7 @@ import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/modal";
 
 import { useRouter } from "next/navigation";
+import Link from "../../../quickstart/frontend/src/Components/Link";
 import { NavigationBar } from "../components/navigationBar";
 
 const chainConfig = {
@@ -56,7 +57,7 @@ export default function Profile({ className, ...props }: CardProps) {
 
   return (
     <div className=" items-center justify-center" style={{display:"flex", overflow:"auto", flex:"1", flexDirection:"column", height:"100vh"}}>
- <Card className={cn("w-[380px]", className)} {...props}>
+ <Card className={cn("w-[30vw]", className)} {...props}>
       <CardHeader>
         <CardTitle>Profile Settings</CardTitle>
       </CardHeader>
@@ -77,6 +78,11 @@ export default function Profile({ className, ...props }: CardProps) {
             <p className="text-sm font-medium leading-none">
               Edit Personal Information
             </p>
+          </div>
+        </div>
+        <div className=" flex items-center space-x-4 rounded-md border p-4">
+          <div className="flex-1 space-y-1">
+            <Link/>
           </div>
         </div>
       </CardContent>
