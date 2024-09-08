@@ -72,7 +72,7 @@ export default function PoolDetails({ params }: { params: { id: string } }){
                                     side = "end"
                                 }
                                 return(
-                                    <div style={{justifySelf:side}} className="mb-5">
+                                    <div style={{justifySelf:side}} className="mb-5" key={index}>
                                         <PoolCardDetails member={detail.member} date={detail.date} src={detail.src} id={detail.id} from={detail.from} price={detail.price}/>
                                     </div>
                                 )
