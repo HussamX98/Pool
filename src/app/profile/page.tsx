@@ -15,8 +15,8 @@ import { CHAIN_NAMESPACES, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/modal";
 
+import { Button } from "@/components/ui/moving-border";
 import { useRouter } from "next/navigation";
-import Link from "../../../quickstart/frontend/src/Components/Link";
 import { NavigationBar } from "../components/navigationBar";
 
 const chainConfig = {
@@ -82,7 +82,9 @@ export default function Profile({ className, ...props }: CardProps) {
         </div>
         <div className=" flex items-center space-x-4 rounded-md border p-4">
           <div className="flex-1 space-y-1">
-            <Link/>
+           <Button type="button" >
+            Launch Link
+          </Button>
           </div>
         </div>
       </CardContent>
